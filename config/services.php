@@ -31,4 +31,9 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'nyt' => [
+        'apiUrl' => env('NYT_BASE_API_URL', null),
+        'apiKey' => env('NYT_API_KEY', null),
+    ],
+
 ];
