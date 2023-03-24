@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Dto\BestSellingBook\BestSellerBooksDto;
-use App\Dto\BestSellingBook\BestSellerBooksFilterDto;
+use App\Dto\BestSellingBook\BestSellerBookDto;
+use App\Dto\BestSellingBook\BestSellerBookFilterDto;
 use GuzzleHttp\Promise\PromiseInterface;
 use App\Hydrators\Common\Hydrator;
 use Illuminate\Http\Client\Response;
@@ -19,14 +19,16 @@ class NewYorkTimesApiService
     }
 
     /**
-     * Documentation for the method:
+     * Get the list of bestsellers books front NYT API with requested filters applied
+     *
+     * Documentation for the NYT API method:
      * https://developer.nytimes.com/docs/books-product/1/routes/lists.json/get
      *
-     * @param BestSellerBooksFilterDto $filterDto
+     * @param BestSellerBookFilterDto $filterDto
      *
      * @return array|null
      */
-    public function getBestSellers(BestSellerBooksFilterDto $filterDto): ?array
+    public function getBestSellers(BestSellerBookFilterDto $filterDto): ?array
     {
         $result = [];
         $response = $this->apiRequest('/svc/books/v3/lists/best-sellers/history.json', $filterDto);
@@ -37,7 +39,7 @@ class NewYorkTimesApiService
             && $decoded['num_results'] > 0
         ) {
             foreach ($decoded['results'] as $book) {
-                $result[] = $this->hydrator->hydrate(BestSellerBooksDto::class, $book, true);
+                $result[] = $this->hydrator->hydrate(BestSellerBookDto::class, $book, true);
             }
         }
 
@@ -45,12 +47,14 @@ class NewYorkTimesApiService
     }
 
     /**
+     * Make API request to NYT
+     *
      * @param string $endPoint
-     * @param BestSellerBooksFilterDto $filterDto
+     * @param BestSellerBookFilterDto $filterDto
      *
      * @return PromiseInterface|Response
      */
-    private function apiRequest(string $endPoint, BestSellerBooksFilterDto $filterDto): PromiseInterface|Response
+    private function apiRequest(string $endPoint, BestSellerBookFilterDto $filterDto): PromiseInterface|Response
     {
         $params = $this->prepareQueryParams($filterDto);
 
@@ -64,11 +68,13 @@ class NewYorkTimesApiService
     }
 
     /**
-     * @param BestSellerBooksFilterDto $filterDto
+     * Remove all NULL and empty values from future Query parameters
+     *
+     * @param BestSellerBookFilterDto $filterDto
      *
      * @return array
      */
-    private function prepareQueryParams(BestSellerBooksFilterDto $filterDto): array
+    private function prepareQueryParams(BestSellerBookFilterDto $filterDto): array
     {
         return array_filter((array) $filterDto);
     }

@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use App\Dto\BestSellingBook\BestSellerBooksDto;
-use App\Dto\BestSellingBook\BestSellerBooksIsbnDto;
-use App\Dto\BestSellingBook\BestSellerBooksRanksHistoryDto;
-use App\Dto\BestSellingBook\BestSellerBooksReviewDto;
+use App\Dto\BestSellingBook\BestSellerBookDto;
+use App\Dto\BestSellingBook\BestSellerBookIsbnDto;
+use App\Dto\BestSellingBook\BestSellerBookRankHistoryDto;
+use App\Dto\BestSellingBook\BestSellerBookReviewDto;
 use PHPUnit\Framework\TestCase;
 
 class BestSellerBooksDtoTest extends TestCase
@@ -16,21 +16,21 @@ class BestSellerBooksDtoTest extends TestCase
     public function test_dto(): void
     {
         $data = [
-            'title',
-            'description',
-            'contributor',
-            'author',
-            'contributorNote',
+            'title' => 'title',
+            'description' => 'description',
+            'contributor' => 'contributor',
+            'author' => 'author',
+            'contributorNote' => 'contributorNote',
             'price' => 5,
-            'ageGroup',
-            'publisher',
-            [
-                new BestSellerBooksIsbnDto("1111111111", "1111111111111"),
-                new BestSellerBooksIsbnDto("2222222222", "2222222222222"),
-                new BestSellerBooksIsbnDto("3333333333", "3333333333333"),
+            'ageGroup' => 'ageGroup',
+            'publisher' => 'publisher',
+            'isbns' => [
+                new BestSellerBookIsbnDto("1111111111", "1111111111111"),
+                new BestSellerBookIsbnDto("2222222222", "2222222222222"),
+                new BestSellerBookIsbnDto("3333333333", "3333333333333"),
             ],
-            [
-                new BestSellerBooksRanksHistoryDto(
+            'ranksHistory' => [
+                new BestSellerBookRankHistoryDto(
                     'primaryIsbn10',
                     'primaryIsbn13',
                     1,
@@ -43,7 +43,7 @@ class BestSellerBooksDtoTest extends TestCase
                     1,
                     1
                 ),
-                new BestSellerBooksRanksHistoryDto(
+                new BestSellerBookRankHistoryDto(
                     'primaryIsbn102',
                     'primaryIsbn132',
                     2,
@@ -57,14 +57,14 @@ class BestSellerBooksDtoTest extends TestCase
                     2
                 )
             ],
-            [
-                new BestSellerBooksReviewDto(
+            'reviews' => [
+                new BestSellerBookReviewDto(
                     'bookReviewLink',
                     'firstChapterLink',
                     'sundayReviewLink',
                     'articleChapterLink'
                 ),
-                new BestSellerBooksReviewDto(
+                new BestSellerBookReviewDto(
                     'bookReviewLink2',
                     'firstChapterLink2',
                     'sundayReviewLink2',
@@ -72,7 +72,7 @@ class BestSellerBooksDtoTest extends TestCase
                 )
             ]
         ];
-        $dto = new BestSellerBooksDto(... $data);
+        $dto = new BestSellerBookDto(...$data);
         $this->assertEquals('title', $dto->title);
         $this->assertEquals('description', $dto->description);
         $this->assertEquals('contributor', $dto->contributor);
@@ -82,6 +82,8 @@ class BestSellerBooksDtoTest extends TestCase
         $this->assertEquals('ageGroup', $dto->ageGroup);
         $this->assertEquals('publisher', $dto->publisher);
 
+        $this->assertTrue(get_class($dto->isbns[0]) === BestSellerBookIsbnDto::class);
+        $this->assertTrue(get_class($dto->isbns[1]) === BestSellerBookIsbnDto::class);
         $this->assertEquals('1111111111', $dto->isbns[0]->isbn10);
         $this->assertEquals('2222222222', $dto->isbns[1]->isbn10);
         $this->assertEquals('3333333333', $dto->isbns[2]->isbn10);
@@ -89,6 +91,7 @@ class BestSellerBooksDtoTest extends TestCase
         $this->assertEquals('2222222222222', $dto->isbns[1]->isbn13);
         $this->assertEquals('3333333333333', $dto->isbns[2]->isbn13);
 
+        $this->assertTrue(get_class($dto->ranksHistory[0]) === BestSellerBookRankHistoryDto::class);
         $this->assertEquals('primaryIsbn10', $dto->ranksHistory[0]->primaryIsbn10);
         $this->assertEquals('primaryIsbn13', $dto->ranksHistory[0]->primaryIsbn13);
         $this->assertEquals(1, $dto->ranksHistory[0]->rank);
@@ -100,6 +103,7 @@ class BestSellerBooksDtoTest extends TestCase
         $this->assertEquals(1, $dto->ranksHistory[0]->asterisk);
         $this->assertEquals(1, $dto->ranksHistory[0]->dagger);
 
+        $this->assertTrue(get_class($dto->ranksHistory[1]) === BestSellerBookRankHistoryDto::class);
         $this->assertEquals('primaryIsbn102', $dto->ranksHistory[1]->primaryIsbn10);
         $this->assertEquals('primaryIsbn132', $dto->ranksHistory[1]->primaryIsbn13);
         $this->assertEquals(2, $dto->ranksHistory[1]->rank);
@@ -111,6 +115,8 @@ class BestSellerBooksDtoTest extends TestCase
         $this->assertEquals(2, $dto->ranksHistory[1]->asterisk);
         $this->assertEquals(2, $dto->ranksHistory[1]->dagger);
 
+        $this->assertTrue(get_class($dto->reviews[0]) === BestSellerBookReviewDto::class);
+        $this->assertTrue(get_class($dto->reviews[1]) === BestSellerBookReviewDto::class);
         $this->assertEquals('bookReviewLink', $dto->reviews[0]->bookReviewLink);
         $this->assertEquals('firstChapterLink', $dto->reviews[0]->firstChapterLink);
         $this->assertEquals('sundayReviewLink', $dto->reviews[0]->sundayReviewLink);

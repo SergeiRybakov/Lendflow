@@ -4,7 +4,7 @@ namespace App\Dto\BestSellingBook;
 
 use App\Dto\Common\BasicDto;
 
-class BestSellerBooksFilterDto extends BasicDto
+class BestSellerBookFilterDto extends BasicDto
 {
     public function __construct(
         public readonly ?string $author,

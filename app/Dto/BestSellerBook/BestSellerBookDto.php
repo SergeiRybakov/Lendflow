@@ -4,7 +4,7 @@ namespace App\Dto\BestSellingBook;
 
 use App\Dto\Common\BasicDto;
 
-class BestSellerBooksDto extends BasicDto
+class BestSellerBookDto extends BasicDto
 {
     public function __construct(
         public readonly ?string $title,
@@ -16,15 +16,15 @@ class BestSellerBooksDto extends BasicDto
         public readonly ?string $ageGroup,
         public readonly ?string $publisher,
         /**
-         * @var BestSellerBooksIsbnDto[]
+         * @var BestSellerBookIsbnDto[]
          */
         public readonly ?array $isbns,
         /**
-         * @var BestSellerBooksRanksHistoryDto[]
+         * @var BestSellerBookRankHistoryDto[]
          */
         public readonly ?array $ranksHistory,
         /**
-         * @var BestSellerBooksReviewDto[]
+         * @var BestSellerBookReviewDto[]
          */
         public readonly ?array $reviews
     ) {

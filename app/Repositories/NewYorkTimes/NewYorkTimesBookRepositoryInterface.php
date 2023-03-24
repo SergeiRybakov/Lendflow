@@ -2,15 +2,15 @@
 
 namespace App\Repositories\NewYorkTimes;
 
-use App\Dto\BestSellingBook\BestSellerBooksDto;
-use App\Dto\BestSellingBook\BestSellerBooksFilterDto;
+use App\Dto\BestSellingBook\BestSellerBookDto;
+use App\Dto\BestSellingBook\BestSellerBookFilterDto;
 
 interface NewYorkTimesBookRepositoryInterface
 {
     /**
-     * @param BestSellerBooksFilterDto $filter
+     * @param BestSellerBookFilterDto $filter
      *
-     * @return null|BestSellerBooksDto
+     * @return null|BestSellerBookDto
      */
-    public function getBestSellerBooksByFilter(BestSellerBooksFilterDto $filter): ?array;
+    public function getBestSellerBooksByFilter(BestSellerBookFilterDto $filter): ?array;
 }

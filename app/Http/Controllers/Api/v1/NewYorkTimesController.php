@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Api\v1;
 
-use App\Dto\BestSellingBook\BestSellerBooksDto;
-use App\Dto\BestSellingBook\BestSellerBooksFilterDto;
+use App\Dto\BestSellingBook\BestSellerBookDto;
+use App\Dto\BestSellingBook\BestSellerBookFilterDto;
 use App\Http\Controllers\Controller;
 use App\Repositories\NewYorkTimes\NewYorkTimesBookRepositoryInterface;
 use App\Rules\NytOffset;
@@ -21,11 +21,11 @@ class NewYorkTimesController extends Controller
     }
 
     /**
-     * Retrieve records from NYT API https://api.nytimes.com/svc/books/v3/lists.json
+     * Retrieve bestsellers books entities
      *
      * @param Request $request
      *
-     * @return array|BestSellerBooksDto|HttpResponse|null|BestSellerBooksDto
+     * @return array|BestSellerBookDto|HttpResponse|null|BestSellerBookDto
      */
     public function actionGet(Request $request)
     {
@@ -44,7 +44,7 @@ class NewYorkTimesController extends Controller
             return new Response($validator->errors(), 422, []);
         }
         $data = $validator->valid();
-        $filterDto = new BestSellerBooksFilterDto(
+        $filterDto = new BestSellerBookFilterDto(
             $data['author'] ?? null,
             $data['isbn'] ?? null,
             $data['title'] ?? null,

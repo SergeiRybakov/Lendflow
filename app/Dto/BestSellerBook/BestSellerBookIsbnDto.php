@@ -4,7 +4,7 @@ namespace App\Dto\BestSellingBook;
 
 use App\Dto\Common\BasicDto;
 
-class BestSellerBooksIsbnDto extends BasicDto
+class BestSellerBookIsbnDto extends BasicDto
 {
     public function __construct(
         public readonly ?string $isbn10 = null,

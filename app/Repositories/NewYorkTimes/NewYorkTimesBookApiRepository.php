@@ -2,10 +2,15 @@
 
 namespace App\Repositories\NewYorkTimes;
 
-use App\Dto\BestSellingBook\BestSellerBooksDto;
-use App\Dto\BestSellingBook\BestSellerBooksFilterDto;
+use App\Dto\BestSellingBook\BestSellerBookDto;
+use App\Dto\BestSellingBook\BestSellerBookFilterDto;
 use App\Services\NewYorkTimesApiService;
 
+/**
+ * Repository class for NYT book entities
+ *
+ * In this implementation books are collected directly from NYT API
+ */
 class NewYorkTimesBookApiRepository implements NewYorkTimesBookRepositoryInterface
 {
     /**
@@ -17,11 +22,13 @@ class NewYorkTimesBookApiRepository implements NewYorkTimesBookRepositoryInterfa
     }
 
     /**
-     * @param BestSellerBooksFilterDto $filter
+     * Get Bestsellers books
      *
-     * @return null|BestSellerBooksDto
+     * @param BestSellerBookFilterDto $filter
+     *
+     * @return null|BestSellerBookDto
      */
-    public function getBestSellerBooksByFilter(BestSellerBooksFilterDto $filter): ?array
+    public function getBestSellerBooksByFilter(BestSellerBookFilterDto $filter): ?array
     {
         return $this->service->getBestSellers($filter);
     }
